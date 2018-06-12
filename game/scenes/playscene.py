@@ -56,7 +56,7 @@ class PlayScene(Scene):
     def render(self):
 
         self.render_hud()
-        #self.addsprite(self.__background, (self.__background_position,0))
+        self.addsprite(self.__background, (self.__background_position,0))
         self.addsprite(self.__ship.sprite, self.__ship.position)
 
         for enemy in self.__enemies:
@@ -80,23 +80,31 @@ class PlayScene(Scene):
             
         for event in events:
 
-            if (event.type == pygame.KEYDOWN and 
-                event.key == 273):
+            if (event.type == pygame.KEYDOWN and event.key == 276):
+                self.__ship.thrust_nx = True
+
+            elif (event.type == pygame.KEYUP and event.key == 276):
+                self.__ship.thrust_nx = False
+
+            if (event.type == pygame.KEYDOWN and event.key == 275):
+                self.__ship.thrust_x = True
+
+            elif (event.type == pygame.KEYUP and event.key == 275):
+                self.__ship.thrust_x = False
+
+            if (event.type == pygame.KEYDOWN and event.key == 273):
                 self.__ship.thrust = True
 
-            elif (event.type == pygame.KEYUP and 
-                  event.key == 273):
+            elif (event.type == pygame.KEYUP and event.key == 273):
                 self.__ship.thrust = False
 
-            if (event.type == pygame.KEYDOWN and
-                event.key == 32):
+            if (event.type == pygame.KEYDOWN and event.key == 32):
                 self.__ship.shield = True
-            elif (event.type == pygame.KEYUP and
-                event.key == 32):
+
+            elif (event.type == pygame.KEYUP and event.key == 32):
                 self.__ship.shield = False
 
-            if (event.type == pygame.KEYDOWN and
-                event.key == 112):
+            if (event.type == pygame.KEYDOWN and event.key == 112):
                 self.__paused = True
 
 

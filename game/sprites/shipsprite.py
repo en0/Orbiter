@@ -21,12 +21,31 @@ class ShipSprite(Sprite):
         )
 
         self.__thrust = False
+        self.__thrust_px = False
+        self.__thrust_nx = False
         self.__shield = False
         self.__force = 0
+        self.__force_x = 0
         self.__fuel = 100.0
         self.__shields = 100.0
         self.__health = 100.0
         self.__mpg = 0.1
+
+    @property
+    def thrust_nx(self):
+        return self.__thrust_nx
+
+    @thrust_nx.setter
+    def thrust_nx(self, value):
+        self.__thrust_nx = value
+
+    @property
+    def thrust_x(self):
+        return self.__thrust_px
+
+    @thrust_x.setter
+    def thrust_x(self, value):
+        self.__thrust_px = value
 
     @property
     def thrust(self):
@@ -83,6 +102,18 @@ class ShipSprite(Sprite):
             if self.__shields > 100:
                 self.__shields = 100
 
+        if self.__thrust_px == True and self.__fuel > 0:
+            self.__force_x += 1
+            self.__fuel -= self.__mpg * 2
+        elif self.__force_x > 0:
+            self.__force_x -= 0.2
+
+        if self.__thrust_nx == True and self.__fuel > 0:
+            self.__force_x -= 1
+            self.__fuel -= self.__mpg * 2
+        elif self.__force_x < 0:
+            self.__force_x += 0.2
+
         if __gfx == 1:
             self.sprite = self.__gfx_thrust
         elif __gfx == 2:
@@ -94,6 +125,7 @@ class ShipSprite(Sprite):
 
         x,y = self.position
         y -= self.__force * .1
+        x += self.__force_x * .5
         self.position = (x,y)
 
     def addfuel(self, value):
